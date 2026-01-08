@@ -31,73 +31,14 @@
     
     @stack('styles')
 </head>
-<body class="association-layout">
+<body class="association-layout1">
     
     <!-- Header Association -->
-    <header class="assoc-header">
+    {{-- <header class="assoc-header">
         <div class="container">
-            {{-- <div class="header-content">
-                <h1>MAIN TENDUE</h1>
-
-                <nav class="assoc-nav">
-                    <!-- Navigation exactement comme dans la maquette -->
-                    <a href="{{ route('associations.dashboard') }}" 
-                       class="assoc-nav-link {{ request()->routeIs('associations.dashboard') ? 'active' : '' }}">
-                       Tableau de bord
-                    </a>
-                    <a href="{{ route('associations.donation.available') }}" 
-                       class="assoc-nav-link {{ request()->routeIs('associations.donation.available') ? 'active' : '' }}">
-                       Catalogue des dons
-                     </a>
-                    <a href="{{ route('associations.donation.received') }}" 
-                       class="assoc-nav-link {{ request()->routeIs('associations.donation.received') ? 'active' : '' }}">
-                       Suivi des dons
-                    </a>   
-                    <a href="{{ route('associations.messages') }}" 
-                       class="assoc-nav-link {{ request()->routeIs('associations.messages') ? 'active' : '' }}">
-                       Messages
-                       @if(isset($stats['messages']) && $stats['messages'] > 0)
-                           <span class="badge bg-danger ms-1">{{ $stats['messages'] }}</span>
-                       @endif
-                    </a>
-                    <a href="{{ route('associations.profile') }}" 
-                       class="assoc-nav-link {{ request()->routeIs('associations.profile') ? 'active' : '' }}">
-                       Profil
-                    </a>
-                </nav>
-
-                <div class="assoc-user-info">
-                    <span class="assoc-user-name">
-                        {{ Auth::user()->association->legal_name ?? 'Mon association' }}
-                    </span>
-                    <span class="assoc-status">Vérifiée</span>
-                    
-                    <!-- Menu déroulant utilisateur -->
-                    <div class="user-menu">
-                        <button class="user-menu-btn" type="button">
-                            <i class="fas fa-user-circle fa-lg"></i>
-                        </button>
-                        <div class="user-dropdown">
-                             <a href="{{ route('associations.profile') }}">
-                                <i class="fas fa-user me-2"></i>Mon profil
-                            </a> 
-                            <a href="{{ route('associations.settings') }}">
-                                <i class="fas fa-cog me-2"></i>Paramètres
-                            </a>
-                            <hr>
-                            <a href="{{ route('logout') }}" 
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+            
         </div>
-    </header>
+    </header> --}}
 
     <!-- Flash messages -->
     <div class="flash-container">
@@ -127,11 +68,11 @@
     </div>
     
     <!-- Main Content -->
-    <main class="assoc-main">
+    <main class="assoc-main1">
         <div class="assoc-container">
             <!-- Header de page comme la maquette -->
-            <div class="assoc-page-header">
-                <h1 class="assoc-page-title">@yield('page-title', 'Tableau de bord de l\'Association')</h1>
+            <div class="assoc-page-header1">
+                <h1 class="assoc-page-title">@yield('page-title', 'Bienvienue sur la page d\'inscription d\'une Association')</h1>
                 <p class="assoc-page-subtitle">
                     @yield('page-subtitle', 'Votre association est vérifiée et active sur la plateforme MAIN TENDUE')
                 </p>

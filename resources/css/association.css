@@ -4,6 +4,11 @@
     background: #f0f9ff; /* Bleu très clair pour association */
     font-family: 'Inter', sans-serif;
 }
+.association-layout1 {
+    min-height: 100vh;
+    background: #fff; /* Bleu très clair pour association */
+    font-family: 'Inter', sans-serif;
+}
 
 /* Header Association */
 .assoc-header {
@@ -100,8 +105,20 @@
     padding: 20px;
     background: white;
     border-radius: var(--border-radius); /* Ta variable */
-    box-shadow: var(--shadow); /* Ta variable */
+    box-shadow: var(--shadow); 
 }
+.assoc-page-header1 {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: white;
+      margin-top: 4em;
+    text-align: center;
+    align-items: center;
+    border-radius: var(--border-radius); /* Ta variable */
+    /* box-shadow: var(--shadow);  */
+}
+  
+    
 
 .assoc-page-title {
     font-size: 32px;

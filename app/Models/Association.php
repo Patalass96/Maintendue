@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  use App\Models\CollectionPoint;  //  Pour la relation collectionPoints()
  use App\Models\DonationRequest;  //  Pour la relation requests()
  use App\Models\Donation;         //  Pour la relation acceptedDonations()
-
+use App\Models\AssociationNeed;
 class Association extends Model
 {
     use HasFactory;
@@ -62,6 +62,10 @@ class Association extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+      public function needs()
+    {
+        return $this->hasMany(AssociationNeed::class);
+    }
 
     /**
      * L'association peut avoir plusieurs points de collecte.
@@ -90,4 +94,6 @@ class Association extends Model
         // Une association est l'entité qui reçoit le don
         return $this->hasMany(Donation::class, 'assigned_association_id');
     }
+
+  
 }
