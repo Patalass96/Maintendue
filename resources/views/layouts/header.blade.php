@@ -32,40 +32,40 @@
 
             <!-- Menu Principal -->
             <div class="nav-menu" id="main-menu">
-                <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+                <a href="{{ route('home') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
                     <i class="fas fa-home"></i>
                     <span>Accueil</span>
                 </a>
                 
                 <div class="dropdown">
-                    <a href="{{ url('/donations') }}" class="nav-link {{ request()->is('donations*') ? 'active' : '' }}">
+                    {{-- <a href="{{ route('donations') }}" class="nav-link {{ request()->is('donations*') ? 'active' : '' }}"> --}}
                         <i class="fas fa-gift"></i>
                         <span>Donner/Recevoir</span>
                         <i class="fas fa-chevron-down"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="{{ url('/donations/create') }}" class="dropdown-item">
+                        {{-- <a href="{{ route('donations/create') }}" class="dropdown-item"> --}}
                             <i class="fas fa-plus-circle"></i>
                             Publier un don
                         </a>
-                        <a href="{{ url('/donations') }}" class="dropdown-item">
+                        {{-- <a href="{{ route('donations') }}" class="dropdown-item"> --}}
                             <i class="fas fa-search"></i>
                             Chercher des dons
                         </a>
                     </div>
                 </div>
                 
-                <a href="{{ url('/associations') }}" class="nav-link {{ request()->is('associations*') ? 'active' : '' }}">
+                {{-- <a href="{{ route('associations') }}" class="nav-link {{ request()->is('associations*') ? 'active' : '' }}"> --}}
                     <i class="fas fa-hands-helping"></i>
                     <span>Associations</span>
                 </a>
                 
-                <a href="{{ url('/about') }}" class="nav-link {{ request()->is('about*') ? 'active' : '' }}">
+                 <a href="{{ route('about') }}" class="nav-link {{ request()->is('about*') ? 'active' : '' }}"> 
                     <i class="fas fa-info-circle"></i>
                     <span>À propos</span>
                 </a>
                 
-                <a href="{{ url('/faq') }}" class="nav-link {{ request()->is('faq*') ? 'active' : '' }}">
+                 <a href="{{ route('faq') }}" class="nav-link {{ request()->is('faq*') ? 'active' : '' }}"> 
                     <i class="fas fa-question-circle"></i>
                     <span>FAQ</span>
                 </a>
@@ -83,7 +83,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu user-dropdown">
-                            <a href="{{ url('/profile') }}" class="dropdown-item">
+                            {{-- <a href="{{ route('profile') }}" class="dropdown-item"> --}}
                                 <i class="fas fa-user"></i> Mon profil
                             </a>
                             <hr>
@@ -97,10 +97,10 @@
                     </div>
                 @else
                     <div class="auth-buttons">
-                        <a href="{{ url('/login') }}" class="btn btn-outline">
+                        <a href="{{ route('login') }}" class="btn btn-outline">
                             <i class="fas fa-sign-in-alt"></i> Connexion
                         </a>
-                        <a href="{{ url('/register') }}" class="btn btn-primary">
+                        <a href="{{ route('register') }}" class="btn btn-primary">
                             <i class="fas fa-user-plus"></i> S'inscrire
                         </a>
                     </div>

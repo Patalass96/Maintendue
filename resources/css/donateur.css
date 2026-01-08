@@ -1,0 +1,257 @@
+/* ===== DONATEUR LAYOUT ===== */
+.donateur-layout {
+    min-height: 100vh;
+    background: #fefce8; /* Jaune très clair pour donateur */
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header Donateur */
+.donateur-header {
+    background: white;
+    padding: 15px 40px;
+    border-bottom: 3px solid var(--accent-color); /* Ta variable */
+    box-shadow: 0 3px 15px rgba(251, 191, 36, 0.15);
+}
+
+.donateur-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.donateur-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #d97706; /* Variante de ton accent-color */
+    margin: 0;
+}
+
+/* Navigation Donateur */
+.donateur-nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.donateur-nav-link {
+    padding: 12px 0;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.donateur-nav-link:hover {
+    color: #d97706;
+}
+
+.donateur-nav-link.active {
+    color: #d97706;
+    font-weight: 600;
+}
+
+.donateur-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent-color); /* Ta variable */
+    border-radius: 2px;
+}
+
+/* Bouton Publier un don */
+.donateur-btn-publier {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.donateur-btn-publier:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.donateur-btn-publier i {
+    font-size: 18px;
+}
+
+/* Main Content */
+.donateur-main {
+    padding: 40px;
+}
+
+.donateur-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Formulaires pour donateur */
+.donateur-form-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.donateur-form-section h3 {
+    color: var(--black); /* Ta variable */
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #fef3c7;
+}
+
+/* Actions formulaire */
+.donateur-form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.donateur-btn-cancel {
+    padding: 14px 28px;
+    background: #f1f5f9;
+    color: #64748b;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.donateur-btn-publish {
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.donateur-btn-cancel:hover {
+    background: #e2e8f0;
+}
+
+.donateur-btn-publish:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Footer Donateur */
+.donateur-footer {
+    background: white;
+    padding: 25px 40px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    border-top: 3px solid var(--accent-color); /* Ta variable */
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.donateur-lang-toggle {
+    color: #d97706;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.donateur-lang-toggle:hover {
+    color: #b45309;
+}
+
+/* ===== COMPATIBILITÉ ===== */
+.donateur-layout .form-group {
+    margin-bottom: 25px;
+}
+
+.donateur-layout .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #475569;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.donateur-layout .form-control {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s;
+    background: white;
+}
+
+.donateur-layout .form-control:focus {
+    outline: none;
+    border-color: var(--accent-color); /* Ta variable */
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+}
+
+/* ===== RESPONSIVE DONATEUR ===== */
+@media (max-width: 1200px) {
+    .donateur-header {
+        padding: 15px 20px;
+    }
+    
+    .donateur-nav {
+        gap: 15px;
+    }
+    
+    .donateur-main {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .donateur-header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .donateur-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 15px;
+    }
+    
+    .donateur-nav-link {
+        font-size: 14px;
+    }
+    
+    .donateur-btn-publier {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .donateur-footer {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+    }
+}

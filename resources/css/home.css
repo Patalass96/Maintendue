@@ -1,4 +1,4 @@
-/* HOME PAGE STYLES */
+HOME PAGE STYLES
 
 /* --- Hero Section & Carousel --- */
 .hero-section {
@@ -6,7 +6,6 @@
     height: 85vh;
     min-height: 600px;
     overflow: hidden;
-    /* Supprime la marge si tu veux que ça colle au header */
     margin-top: 0; 
 }
 
@@ -14,10 +13,10 @@
     position: relative;
     height: 100%;
     width: 100%;
-    background-color: #000; /* Fond noir pendant le chargement */
+    background-color: #000; 
 }
 
-.carousel-slide {
+ .carousel-slide {
     position: absolute;
     top: 0;
     left: 0;
@@ -37,7 +36,7 @@
     opacity: 1;
     visibility: visible;
     z-index: 2;
-}
+} 
 
 .slide-overlay {
     position: absolute;
@@ -45,7 +44,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* Overlay bleu transparent typique des ONG */
     background: linear-gradient(135deg, rgba(14, 165, 233, 0.6) 0%, rgba(3, 105, 161, 0.4) 100%);
     z-index: 2;
 }
@@ -60,7 +58,7 @@
 }
 
 .slide-content h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem); /* Taille fluide selon l'écran */
+    font-size: clamp(2.5rem, 5vw, 4rem); 
     font-weight: 800;
     margin-bottom: 1.5rem;
     color: white;
@@ -237,10 +235,72 @@
     color: #0ea5e9;
 }
 
+.quick-search-section {
+    background-color: #f9f9f9;
+    border-top: 1px solid #eee;
+}
+
+.search-filter-form {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    margin: 30px auto;
+    max-width: 1000px;
+}
+
+.filter-inputs-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+    gap: 15px;
+    align-items: center;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    color: #999;
+}
+
+.input-with-icon input {
+    padding-left: 35px;
+}
+
+.map-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+/* État initial : invisible et légèrement décalé vers le bas */
+.quick-search-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+/* État final : visible et à sa place */
+.quick-search-section.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
     .hero-section { height: 70vh; }
     .hero-buttons { flex-direction: column; align-items: center; }
     .btn-lg { width: 100%; max-width: 300px; }
-    .carousel-control { display: none; } /* On cache les flèches sur mobile */
+    .carousel-control { display: none; } 
 }

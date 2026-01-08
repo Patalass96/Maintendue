@@ -49,4 +49,24 @@ class PageController extends Controller
     {
         return view('pages.about');
     }
+
+    // Ta route : Route::get('/privacy', [PageController::class, 'privacy'])
+    public function privacy()
+   {
+    return view('pages.privacy');
+
+}
+
+    // Ta route : Route::get('/terms', [PageController::class, 'terms'])
+    public function terms()
+   {
+    return view('pages.terms');
+}
+
+public function mentions()
+{
+    return view('pages.mentions-legales');
+}
+
+
 }

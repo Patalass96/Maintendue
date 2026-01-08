@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +21,7 @@ use App\Models\UserNotificationSetting; // Pour les préférences de notificatio
 use App\Models\Report; // Pour les signalements émis et reçus
 use App\Models\AdminAction; // Pour les actions effectuées par l'administrateur
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
@@ -42,6 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'role', 
         'is_active', 
+        'is_verified',
         'avatar', 
         'phone', 
         'address', 
@@ -69,14 +70,23 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            // 'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_active' => 'boolean', // Conversion du 0/1 en booléen
-            'settings' => 'array', // Conversion du JSON en tableau PHP
+            'is_active' => 'boolean', 
+            'is_verified' => 'boolean',
+            'settings' => 'array', 
             'latitude' => 'float',
             'longitude' => 'float',
         ];
 
+    }
+
+    /**
+     * Vérifie si l'association est validée par l'admin.
+     */
+    public function isVerifiedAssociation(): bool
+    {
+        return $this->isAssociation() && $this->is_verified === true;
     }
     
     // --- RELATIONS ELOQUENT ---

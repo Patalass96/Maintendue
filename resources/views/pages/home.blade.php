@@ -3,14 +3,14 @@
 @section('title', 'MAIN TENDUE - Donner, c\'est changer une vie')
 
 @section('styles')
-    @vite(['resources/css/home.css', 'resources/css/app.css','resources/js/home.js'])
+    @vite(['resources/css/app.css', 'resources/css/home.css',])
 @endsection
 
 @section('content')
 <section class="hero-section">
     <div class="hero-carousel" id="heroCarousel">
         
-        <div class="carousel-slide active" style="background: url({{ asset('assets/images/hero/ong_1.jpg') }}) no-repeat; background-size: cover; background-position: center;">
+        <div class="carousel-slide active" style="background: url({{ asset('assets/images/hero/ong_1.jpg') }}) no-repeat; background-size: cover; background-position: center; width: 100%; height: 100vh;">
             <div class="slide-overlay"></div>
             <div class="container">
                 <div class="slide-content">
@@ -32,7 +32,7 @@
             </div>
         </div>
         
-        <div class="carousel-slide" style="background: url({{ asset('assets/images/hero/Joie_vivre_2.jpg') }}) no-repeat; background-size: cover; background-position: center;">
+        <div class="carousel-slide" style="background: url({{ asset('assets/images/hero/Joie_vivre_2.jpg') }}) no-repeat; background-size: cover; background-position: center;width: 100%; height: 100vh;">
             <div class="slide-overlay"></div>
             <div class="container">
                 <div class="slide-content">
@@ -49,7 +49,7 @@
             </div>
         </div>
         
-        <div class="carousel-slide" style="background: url({{ asset('assets/images/hero/Donations_3.jpg') }}) no-repeat; background-size: cover; background-position: center;">
+        <div class="carousel-slide" style="background: url({{ asset('assets/images/hero/Donations_3.jpg') }}) no-repeat; background-size: cover; background-position: center;width: 100%; height: 100vh ;">
             <div class="slide-overlay"></div>
             <div class="container">
                 <div class="slide-content">
@@ -84,7 +84,7 @@
 <section class="how-it-works section-padding">
     <div class="container">
         <div class="section-header text-center">
-            <h2>Comment ça marche ?</h2>
+            <h2  style="margin-top: 18em !important">Comment ça marche ?</h2>
             <p class="section-subtitle">
                 MAIN TENDUE simplifie le processus de don pour une aide rapide et efficace
             </p>
@@ -123,7 +123,6 @@
         <div class="stats-grid">
             @php
                 use App\Models\User;
-                use App\Models\Donation;
                 use App\Models\Association;
                 use App\Models\CollectionPoint;
             @endphp
@@ -139,7 +138,7 @@
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-gift"></i></div>
                 <div class="stat-content">
-                    <h3 class="stat-value">{{ Donation::count() }}</h3>
+                    {{-- <h3 class="stat-value">{{ Donation::count() }}</h3> --}}
                     <p class="stat-label">Dons</p>
                 </div>
             </div>
@@ -174,11 +173,23 @@
         
         <div class="donations-grid">
             @php
+                use App\Models\Donation;
                 $recentDonations = Donation::with('category', 'primaryImage')
                     ->orderBy('created_at', 'desc')
                     ->take(6)
                     ->get();
             @endphp
+
+{{-- <div class="donations-grid">
+    @foreach($recentDonations as $donation)
+        <div class="donation-card">
+            <h4>{{ $donation->title }}</h4>
+            <span>{{ $donation->category->name }}</span>
+        </div>
+    @endforeach
+</div> --}}
+
+
             
             @foreach($recentDonations as $donation)
             <div class="donation-card">
@@ -217,63 +228,7 @@
 @endsection
 
 @section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.carousel-indicators .indicator');
-        const prevBtn = document.getElementById('prevSlide');
-        const nextBtn = document.getElementById('nextSlide');
-        let currentSlide = 0;
-        let slideInterval;
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            indicators[index].classList.add('active');
-            currentSlide = index;
-        }
-
-        function nextSlide() {
-            let newIndex = (currentSlide + 1) % slides.length;
-            showSlide(newIndex);
-        }
-
-        function prevSlide() {
-            let newIndex = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(newIndex);
-        }
-
-        // Événements
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            resetTimer();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            resetTimer();
-        });
-
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                showSlide(index);
-                resetTimer();
-            });
-        });
-
-        // Timer automatique (4 secondes)
-        function startTimer() {
-            slideInterval = setInterval(nextSlide, 4000);
-        }
-
-        function resetTimer() {
-            clearInterval(slideInterval);
-            startTimer();
-        }
-
-        startTimer();
-    });
-</script>
+     @vite([ 'resources/js/app.js', 'resources/js/home.js'])
+   
 @endsection

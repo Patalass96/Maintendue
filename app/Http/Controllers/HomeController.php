@@ -11,7 +11,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::active()->orderBy('order_index')->get();
+        $categories = Category::active()->get();
+
         $recentDonations = Donation::with(['category', 'primaryImage'])
             ->available()
             ->orderBy('created_at', 'desc')
@@ -27,6 +28,10 @@ class HomeController extends Controller
         
         return view('home', compact('categories', 'recentDonations', 'stats'));
     }
-    
-    // Autres méthodes...
-}
+
+ }
+//     public function index() 
+//     {
+//     $categories = \App\Models\Category::all(); // On récupère les catégories pour le filtre
+//     return view('home', compact('categories'));
+//    }

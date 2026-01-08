@@ -1,274 +1,282 @@
-/* Container principal */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Conteneur principal */
 .auth-wrapper {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #ffffff;
+    background-color: #f8fafc;
     padding: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Style du Logo */
 .auth-logo img {
-    width: 100px;
-    height: auto;
+    width: 120px;
     margin-bottom: 20px;
 }
 
 /* La carte blanche */
 .auth-card {
+    background: #ffffff;
     width: 100%;
     max-width: 450px;
     padding: 40px;
-    border: 1px solid #f0f0f0;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .auth-card h2 {
+    color: #1e293b;
     font-size: 24px;
-    font-weight: 700;
     margin-bottom: 8px;
-    color: #1a1a1a;
+    text-align: center;
 }
 
 .auth-subtitle {
-    font-size: 14px;
-    color: #666;
+    color: #64748b;
+    text-align: center;
     margin-bottom: 30px;
+    font-size: 14px;
 }
 
-/* Formulaire */
+/* Champs de formulaire avec icônes */
 .form-group {
     margin-bottom: 20px;
-    text-align: left;
 }
 
 .form-group label {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
     margin-bottom: 8px;
-    color: #333;
+    font-weight: 500;
+    color: #334155;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    background-color: #f9fafb;
-    font-size: 14px;
-}
-
-.form-group input:focus {
-    border-color: #3b82f6;
-    outline: none;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-}
-
-/* Ligne des boutons Se Connecter / S'inscrire */
-.auth-buttons-row {
-    display: flex;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-    gap: 12px;
-    margin-top: 25px;
-}
-
-.btn-submit {
-    flex: 1;
-    background-color: #3b82f6; /* Bleu de la capture */
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.btn-submit:hover {
-    background-color: #2563eb;
-}
-.btn-register {
-    flex: 1;
-    background-color: #e5e7eb;
-    color: #111;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s ease;
-}
-.btn-register:hover {
-    background-color: #d1d5db;
-}
-.btn-register-link {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #e5e7eb;
-    color: #111;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* Séparateur "Ou" */
-.auth-divider {
-    margin: 30px 0;
+.input-with-icon {
     position: relative;
-    border-top: 1px solid #eee;
-}
-
-.auth-divider span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 0 15px;
-    color: #999;
-    font-size: 14px;
-}
-
-/* Style des deux boutons toggle */
-.auth-buttons-row {
-    display: flex;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 25px;
-    margin-bottom: 25px;
-}
-
-.btn-toggle {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    background: #fff;
-    color: #374151;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
 }
 
- .btn-toggle.active {
-    background-color: #3b82f6; /* Bleu Main Tendue */
-    color: #fff;
-} 
+.input-with-icon i {
+    position: absolute;
+    left: 15px;
+    color: #94a3b8;
+    transition: color 0.3s;
+}
 
-/* Bouton de validation final (Se connecter ou S'inscrire) */
-.btn-submit-main {
+.input-with-icon input, 
+.input-with-icon select {
+    width: 100%;
+    padding: 12px 15px 12px 45px !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-with-icon input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-with-icon input:focus + i {
+    color: #3b82f6;
+}
+
+/* Bouton soumission */
+.btn-submit {
     width: 100%;
     background-color: #3b82f6;
     color: white;
     padding: 14px;
     border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
 }
 
-/* Boutons Sociaux */
-.social-auth {
+.btn-submit:hover {
+    background-color: #2563eb;
+}
+
+/* Divider & Social */
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 0; width: 100%; height: 1px; background: #e2e8f0;
+}
+
+.divider span {
+    background: #fff;
+    padding: 0 15px;
+    position: relative;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.social-btns {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
-.btn-social {
+.social-link {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
     text-decoration: none;
-    color: #374151;
-    font-weight: 500;
-    transition: background 0.2s;
-}
-
-.btn-social img { width: 18px; }
-
-.btn-social:hover { background: #f9fafb; }
-
-/* Liens du bas */
-.auth-footer { margin-top: 20px; }
-
-.forgot-link {
-    color: #3b82f6;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.legal-text {
-    margin-top: 35px;
-    font-size: 12px;
-    color: #9ca3af;
-    line-height: 1.6;
-}
-
-.legal-text a { color: #6b7280; text-decoration: underline; }
-
-.form-group label i {
-    margin-right: 8px;
-    color: var(--primary-color); /* Utilise la variable de votre home.css */
-    font-size: 0.9rem;
-}
-
-.login-actions i {
-    margin-right: 5px;
-}
-
-#remember {
-    accent-color: #3b82f6; 
-    width: 16px;
-    height: 16px;
+    color: #50a5ba;
+    font-size: 14px;
+    transition: background 0.3s;
 }
 
 
-.forgot-password i {
-    font-size: 0.8rem;
-    margin-right: 4px;
+    /* Styles supplémentaires pour la page de connexion */
+        .role-redirect-info {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .role-redirect-info.show {
+            display: block;
+        }
+        
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        
+        .badge-admin {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .badge-association {
+            background: #059669;
+            color: white;
+        }
+        
+        .badge-donateur {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .forgot-password {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .status-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-verified {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .account-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .verification-notice {
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .verification-notice h5 {
+            color: #92400e;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+.social-link:hover { background: #f1f5f9; }
+
+.auth-footer, .legal-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #a2bce0;
 }
 
-.btn-submit, .btn-register {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-
-
-/* Responsive */
-  @media (max-width: 480px) {
-.auth-card {
-        padding: 25px;
-    }
-.auth-buttons-row {
-        flex-direction: column;
-    }
-
-}
+.auth-footer a { color: #3b82f6; text-decoration: none; font-weight: 600; }

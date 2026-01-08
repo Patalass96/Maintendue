@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@maintendue.tg',
             'password' => Hash::make('admin123'),
             'avatar'=> 'assets/images/MainTendue.png',
+            'role' => User::ROLE_ADMIN,
         
         ]);
 
@@ -25,9 +26,9 @@ class UserSeeder extends Seeder
         User::factory()->association()->create([
             'name' => 'Croix Rouge Test',
             'email' => 'association@test.org',
-            // 'password' => Hash::make('password'),
-            // 'role' => 'association',
-            // 'is_active' => true,
+            'password' => Hash::make('password'),
+            'role' => 'association',
+            'is_active' => true,
         ]);
 
         // 3. Un Donateur de test

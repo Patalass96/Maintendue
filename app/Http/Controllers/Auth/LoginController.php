@@ -3,80 +3,91 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use App\Models\User;
 
 class LoginController extends Controller
 {
-    
+    use AuthenticatesUsers;
+
     /**
-     * Affiche le formulaire de connexion
+     * Où rediriger après la connexion si la méthode authenticated n'est pas utilisée.
      */
-    public function showLoginForm()
+    protected $redirectTo = '/dashboard';
+
+    public function __construct()
     {
-        return view('auth.authentificate');
+        $this->middleware('guest')->except('logout');
     }
 
     /**
-     * Traite la tentative de connexion
-     */
-    public function login(Request $request)
-    {
-        // 1. Validation des données
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        // 2. Tentative de connexion (Auth)
-        if (Auth::attempt($credentials, $request->remember)) {
-            $request->session()->regenerate();
-
-            $user = Auth::user();
-
-            // 3. Vérification si le compte est actif (colonne is_active dans ton modèle)
-            if (!$user->is_active) {
-                Auth::logout();
-                return back()->withErrors(['email' => 'Votre compte est suspendu.']);
-            }
-
-            // 4. Redirection intelligente basée sur Les constantes de Rôle
-            return $this->authentifcated($request, $user);
-        }
-
-        // Si échec
-        return back()->withErrors([
-            'email' => 'Les identifiants ne correspondent pas à nos enregistrements.',
-        ])->onlyInput('email');
-    }
-
-    /**
-     * Redirection selon le rôle (MVC Logic)
+     * Logique de redirection personnalisée après connexion réussie.
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($user->isAdmin()) {
-            return redirect()->route('admin.dashboard');
+        // Vérifier si le compte est actif
+        if (!$user->is_active) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Votre compte a été désactivé. Contactez l\'administrateur.',
+            ]);
         }
 
-        if ($user->isAssociation()) {
-            return redirect()->route('association.dashboard');
-        }
+        // Redirection selon le rôle
+        switch ($user->role) {
+            case 'admin':
+                // Pour les admins, pas de vérification is_verified nécessaire
+                return redirect()->route('admin.dashboard')
+                    ->with('success', 'Bienvenue Administrateur !');
 
-        // Par défaut pour les donateurs
-        return redirect()->intended('/home');
+            case 'association':
+                // Vérifier si l'association a un profil
+                if (!$user->association) {
+                    return redirect()->route('associations.complete-profile')
+                        ->with('info', 'Complétez votre profil association pour commencer.');
+                }
+
+                // Vérifier le statut de vérification manuelle
+                $association = $user->association;
+                if ($association->verification_status !== 'verified') {
+                    return redirect()->route('associations.complete-profile')
+                        ->with('warning', 'Votre association est en attente de validation par nos administrateurs.');
+                }
+
+                return redirect()->route('associations.dashboard')
+                    ->with('success', 'Bienvenue Association !');
+
+            case 'donateur':
+                // Les donateurs se connectent directement
+                return redirect()->route('user.dashboard')
+                    ->with('success', 'Bienvenue Donateur !');
+
+            default:
+                // Fallback
+                return redirect()->route('home')
+                    ->with('success', 'Bienvenue !');
+        }
     }
 
     /**
-     * Déconnexion
+     * Personnaliser les messages d'erreur
      */
-    public function logout(Request $request)
+    protected function sendFailedLoginResponse(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
+        throw ValidationException::withMessages([
+            'email' => 'Identifiants incorrects ou compte inactif.',
+        ]);
+    }
+
+    /**
+     * Redirection après déconnexion
+     */
+    protected function loggedOut(Request $request)
+    {
+        return redirect()->route('home')
+            ->with('success', 'Vous avez été déconnecté avec succès.');
     }
 }
-

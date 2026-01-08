@@ -1,0 +1,188 @@
+/* ===== ASSOCIATION LAYOUT ===== */
+.association-layout {
+    min-height: 100vh;
+    background: #f0f9ff; /* Bleu très clair pour association */
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header Association */
+.assoc-header {
+    background: white;
+    padding: 0 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-bottom: 2px solid var(--primary-color); /* Ta variable */
+}
+
+.assoc-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.assoc-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-color); /* Ta variable */
+    margin: 0;
+}
+
+/* Navigation Association */
+.assoc-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.assoc-nav-link {
+    padding: 12px 0;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.assoc-nav-link:hover {
+    color: var(--primary-color);
+}
+
+.assoc-nav-link.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.assoc-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* User Association */
+.assoc-user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.assoc-user-name {
+    font-weight: 600;
+    color: var(--black); /* Ta variable */
+}
+
+.assoc-status {
+    background: var(--secondary-light); /* Ta variable */
+    color: var(--secondary-dark); /* Ta variable */
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Main Content */
+.assoc-main {
+    padding: 30px 40px;
+}
+
+.assoc-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Page Header spécifique association */
+.assoc-page-header {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius); /* Ta variable */
+    box-shadow: var(--shadow); /* Ta variable */
+}
+
+.assoc-page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--black); /* Ta variable */
+    margin: 0 0 10px 0;
+}
+
+.assoc-page-subtitle {
+    font-size: 16px;
+    color: var(--gray); /* Ta variable */
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Footer Association */
+.assoc-footer {
+    background: var(--dark-gray); /* Ta variable */
+    padding: 25px 40px;
+    text-align: center;
+    color: var(--white); /* Ta variable */
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+/* ===== COMPATIBILITÉ ===== */
+.association-layout .btn {
+    /* Hérite de tes styles de bouton */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 24px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.7rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 8px;
+    text-decoration: none;
+}
+
+/* ===== RESPONSIVE ASSOCIATION ===== */
+@media (max-width: 1200px) {
+    .assoc-header {
+        padding: 0 20px;
+    }
+    
+    .assoc-nav {
+        gap: 15px;
+    }
+    
+    .assoc-main {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .assoc-header .container {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+        gap: 15px;
+    }
+    
+    .assoc-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 20px;
+    }
+    
+    .assoc-nav-link {
+        font-size: 14px;
+    }
+    
+    .assoc-user-info {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .assoc-page-title {
+        font-size: 24px;
+    }
+}

@@ -1,8 +1,20 @@
 @extends('layouts.app')
+ {{-- @extends('layouts.banniereAllPage')  --}}
 
-@section('title', 'Foire Aux Questions')
+{{-- @section('title', 'Foire Aux Questions') --}}
+
+@section('styles')
+    @vite(['resources/css/app.css', 'resources/css/home.css',])
+@endsection
 
 @section('content')
+
+<section class="about-hero" style="background: url('{{ asset('assets/images/hero/banniereAllPage.jpg') }}'); background-size: cover; color: white; padding: 100px 0; text-align: center;">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 20px; color: #FFF">Donner, c'est changer une vie</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">MainTendue est la première plateforme solidaire au Togo dédiée à la redistribution d'objets essentiels entre particuliers, associations et d'autres personne en difficultés.</p>
+</div>
+    </section>
 <div class="faq-container" style="max-width: 800px; margin: 50px auto; padding: 0 20px;">
     <div class="faq-header" style="text-align: center; margin-bottom: 40px;">
         <h1 style="color: #1a1a1a; font-size: 2.5rem; margin-bottom: 10px;">Comment pouvons-nous vous aider ?</h1>
@@ -36,6 +48,10 @@
 @endsection
 
 @section('scripts')
+
+@section('scripts')
+    @vite(['resources/js/app.js', 'resources/js/home.js'])
+@endsection
 <script>
     document.querySelectorAll('.faq-question').forEach(button => {
         button.addEventListener('click', () => {

@@ -1,0 +1,13 @@
+body{
+    margin: 0;
+    padding: 0;
+
+}
+section.banniere-all{
+    background: url('/public/assets/images/hero/banniereAllPage.jpg') no-repeat center center/cover;
+    width: 100%;
+    height: 40vh;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}

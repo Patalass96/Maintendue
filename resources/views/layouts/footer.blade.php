@@ -95,11 +95,18 @@
                     <p>&copy; {{ date('Y') }} MAIN TENDUE. Tous droits réservés.</p>
                 </div>
                 
-                <div class="footer-legal">
+                {{-- <div class="footer-legal">
                     <a href="#">Confidentialité</a>
                     <a href="#">Conditions</a>
                     <a href="#">Mentions légales</a>
-                </div>
+                </div> --}}
+
+                 <div class="footer-bottom-links">
+              <a href="{{ route('privacy') }}" class="footer-link" style="color: #cbd5e0; text-decoration: none; margin-left: 20px;">Confidentialité</a>
+              <a href="{{ route('terms') }}" class="footer-link" style="color: #cbd5e0; text-decoration: none; margin-left: 20px;">Conditions</a>
+              <a href="{{ route('mentions') }}" class="footer-link" style="color: #cbd5e0; text-decoration: none; margin-left: 20px;">Mentions légales</a>
+              </div>
+
             </div>
         </div>
     </div>
