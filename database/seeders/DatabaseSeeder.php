@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB; // <-- ASSUREZ-VOUS QUE CECI EST BIEN IMPORTÉ
+use Illuminate\Support\Facades\DB; 
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 🛑 1. Désactiver la vérification des clés étrangères (CRUCIAL pour migrate:fresh)
-        $this->command->info('🚀 Début du peuplement de la base de données...');
+        $this->command->info(' Début du peuplement de la base de données...');
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 0'); 
 
@@ -33,6 +33,6 @@ class DatabaseSeeder extends Seeder
         // 🟢 2. Réactiver la vérification des clés étrangères
         DB::statement('SET FOREIGN_KEY_CHECKS = 1'); 
 
-        $this->command->info('✅ Peuplement de la base de données terminé avec succès !');
+        $this->command->info(' Peuplement de la base de données terminé avec succès !');
     }
 }

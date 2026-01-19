@@ -35,7 +35,7 @@ class LoginController extends Controller
                 'email' => 'Votre compte a été désactivé. Contactez l\'administrateur.',
             ]);
         }
-
+        $association = $user->association;
         // Redirection selon le rôle
         switch ($user->role) {
             case 'admin':
@@ -51,7 +51,6 @@ class LoginController extends Controller
                 }
 
                 // Vérifier le statut de vérification manuelle
-                $association = $user->association;
                 if ($association->verification_status !== 'verified') {
                     return redirect()->route('associations.complete-profile')
                         ->with('warning', 'Votre association est en attente de validation par nos administrateurs.');

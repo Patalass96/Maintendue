@@ -9,14 +9,14 @@
 @section('content')
 <section class="hero-section">
     <div class="hero-carousel" id="heroCarousel">
-        
+
         <div class="carousel-slide active" style="background: url({{ asset('assets/images/hero/ong_1.jpg') }}) no-repeat; background-size: cover; background-position: center; width: 100%; height: 100vh;">
             <div class="slide-overlay"></div>
             <div class="container">
                 <div class="slide-content">
                     <h1>Donner, c'est changer une vie</h1>
                     <p class="lead">
-                        MAIN TENDUE connecte les donneurs, les associations et les bénéficiaires 
+                        MAIN TENDUE connecte les donneurs, les associations et les bénéficiaires
                         pour redistribuer efficacement les dons essentiels.<br>Ne laissez plus vos objets dormir. MainTendue transforme votre générosité en actions concrètes au cœur du Togo. Rejoignez la révolution de l'entraide.
             </p>
                     </p>
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="carousel-slide" style="background: url({{ asset('assets/images/hero/Joie_vivre_2.jpg') }}) no-repeat; background-size: cover; background-position: center;width: 100%; height: 100vh;">
             <div class="slide-overlay"></div>
             <div class="container">
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="carousel-slide" style="background: url({{ asset('assets/images/hero/Donations_3.jpg') }}) no-repeat; background-size: cover; background-position: center;width: 100%; height: 100vh ;">
             <div class="slide-overlay"></div>
             <div class="container">
@@ -66,14 +66,14 @@
             </div>
         </div>
     </div>
-    
+
     <button class="carousel-control prev" id="prevSlide">
         <i class="fas fa-chevron-left"></i>
     </button>
     <button class="carousel-control next" id="nextSlide">
         <i class="fas fa-chevron-right"></i>
     </button>
-    
+
     <div class="carousel-indicators">
         <button class="indicator active" data-slide="0"></button>
         <button class="indicator" data-slide="1"></button>
@@ -89,7 +89,7 @@
                 MAIN TENDUE simplifie le processus de don pour une aide rapide et efficace
             </p>
         </div>
-        
+
         <div class="steps-grid">
             <div class="step-card">
                 <div class="step-icon">
@@ -98,7 +98,7 @@
                 <h3>1. Identifier un besoin</h3>
                 <p>Repérez un don nécessaire ou une association qui correspond à vos valeurs.</p>
             </div>
-            
+
             <div class="step-card">
                 <div class="step-icon">
                     <i class="fas fa-gift"></i>
@@ -106,7 +106,7 @@
                 <h3>2. Faites votre don</h3>
                 <p>Publiez un article à donner ou proposez-le directement à une association.</p>
             </div>
-            
+
             <div class="step-card">
                 <div class="step-icon">
                     <i class="fas fa-chart-line"></i>
@@ -126,7 +126,7 @@
                 use App\Models\Association;
                 use App\Models\CollectionPoint;
             @endphp
-            
+
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-users"></i></div>
                 <div class="stat-content">
@@ -134,7 +134,7 @@
                     <p class="stat-label">Utilisateurs</p>
                 </div>
             </div>
-            
+
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-gift"></i></div>
                 <div class="stat-content">
@@ -142,15 +142,15 @@
                     <p class="stat-label">Dons</p>
                 </div>
             </div>
-            
-            <div class="stat-card">
+
+            <a href="{{ route('associations.index') }}" class="stat-card" style="text-decoration: none; color: inherit;">
                 <div class="stat-icon"><i class="fas fa-hands-helping"></i></div>
                 <div class="stat-content">
                     <h3 class="stat-value">{{ Association::count() }}</h3>
                     <p class="stat-label">Associations</p>
                 </div>
-            </div>
-            
+            </a>
+
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
                 <div class="stat-content">
@@ -170,7 +170,7 @@
                 Voir tous <i class="fas fa-arrow-right"></i>
             </a>
         </div>
-        
+
         <div class="donations-grid">
             @php
                 use App\Models\Donation;
@@ -190,7 +190,7 @@
 </div> --}}
 
 
-            
+
             @foreach($recentDonations as $donation)
             <div class="donation-card">
                 <div class="donation-image">
@@ -230,5 +230,5 @@
 @section('scripts')
 
      @vite([ 'resources/js/app.js', 'resources/js/home.js'])
-   
+
 @endsection

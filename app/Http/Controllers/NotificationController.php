@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Review;
+use App\Models\Donation;
+use App\Models\User;
+use App\servises\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class NotificationController extends Controller
 {
@@ -13,17 +19,17 @@ class NotificationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         // Récupérer les notifications (dans un vrai projet, vous utiliseriez le système de notifications de Laravel)
         $notifications = [
             'today' => $this->getTodayNotifications(),
             'yesterday' => $this->getYesterdayNotifications(),
             'this_week' => $this->getThisWeekNotifications(),
         ];
-        
+
         // Récupérer les paramètres de notification
         $notificationSettings = $this->getNotificationSettings($user);
-        
+
         return view('notifications.index', compact('notifications', 'notificationSettings'));
     }
 
@@ -35,7 +41,7 @@ class NotificationController extends Controller
         // Dans un vrai projet, vous marqueriez la notification comme lue dans la base de données
         // $notification = Auth::user()->notifications()->find($id);
         // $notification->markAsRead();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Notification marquée comme lue'
@@ -49,7 +55,7 @@ class NotificationController extends Controller
     {
         // Dans un vrai projet, vous marqueriez toutes les notifications comme lues
         // Auth::user()->unreadNotifications->markAsRead();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Toutes les notifications ont été marquées comme lues'
@@ -64,7 +70,7 @@ class NotificationController extends Controller
         // Dans un vrai projet, vous supprimeriez la notification
         // $notification = Auth::user()->notifications()->find($id);
         // $notification->delete();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Notification supprimée'
@@ -78,7 +84,7 @@ class NotificationController extends Controller
     {
         // Dans un vrai projet, vous supprimeriez toutes les notifications
         // Auth::user()->notifications()->delete();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Toutes les notifications ont été supprimées'
@@ -91,7 +97,7 @@ class NotificationController extends Controller
     public function updateSettings(Request $request)
     {
         $user = Auth::user();
-        
+
         $validated = $request->validate([
             'email_notifications' => ['boolean'],
             'push_notifications' => ['boolean'],
@@ -100,11 +106,11 @@ class NotificationController extends Controller
             'system_notifications' => ['boolean'],
             'message_notifications' => ['boolean'],
         ]);
-        
+
         // Sauvegarder les paramètres (dans un vrai projet, vous les sauvegarderiez dans la base de données)
         // $user->notification_settings = json_encode($validated);
         // $user->save();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Paramètres de notification mis à jour'
@@ -121,7 +127,7 @@ class NotificationController extends Controller
                 'id' => 1,
                 'type' => 'donations',
                 'title' => 'Don confirmé !',
-                'message' => 'Votre don de 50€ à l\'association Les Jeunes Espoirs a été confirmé avec succès.',
+                'message' => 'Votre don de 5000f à l\'association Les Jeunes Espoirs a été confirmé avec succès.',
                 'time' => 'Il y a 2 heures',
                 'read' => false,
                 'icon' => 'donate',
@@ -205,7 +211,7 @@ class NotificationController extends Controller
     {
         // Dans un vrai projet, vous récupéreriez ces données de la base de données
         // $settings = json_decode($user->notification_settings, true);
-        
+
         return [
             'email_notifications' => true,
             'push_notifications' => true,

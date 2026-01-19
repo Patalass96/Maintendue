@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Association;
 
 class VerifyAssociation
 {
@@ -36,28 +37,29 @@ class VerifyAssociation
                 ->with('error', 'Votre compte association a été désactivé.');
         }
 
-        // 4. Vérifier si l'association a un profil
-        if (!$user->association) {
+        // 4. RECHARGER l'association depuis la base de données (pas du cache)
+        $association = Association::where('user_id', $user->id)->first();
+
+        // 5. Vérifier si l'association existe
+        if (!$association) {
             return redirect()->route('associations.complete-profile')
                 ->with('warning', 'Veuillez compléter votre profil association pour continuer.');
         }
 
-        // 5. Vérifier le statut de vérification
-        $association = $user->association;
-        
+        // 6. Vérifier le statut de vérification
         switch ($association->verification_status) {
             case 'pending':
-                return redirect()->route('associations.complete-profile')
+                return redirect()->route('associations.pending')
                     ->with('info', 'Votre association est en attente de validation. Vous recevrez un email une fois validée.');
-            
+
             case 'rejected':
                 return redirect()->route('associations.complete-profile')
                     ->with('error', 'Votre association a été rejetée. Contactez l\'administration pour plus d\'informations.');
-            
+
             case 'verified':
                 // Tout est bon, continuer
                 return $next($request);
-            
+
             default:
                 return redirect()->route('associations.complete-profile')
                     ->with('error', 'Statut de vérification inconnu.');
@@ -79,7 +81,7 @@ class VerifyAssociation
 //      *
 //      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
 //      */
-//   public function handle(Request $request, Closure $next): Response 
+//   public function handle(Request $request, Closure $next): Response
 //  {
 
 //     $user = auth()->user();
@@ -94,7 +96,7 @@ class VerifyAssociation
 //         return redirect('/association/complete-profile')
 //                ->with('error', 'Votre compte association est en attente de validation.');
 //     }
-        
+
 //     return $next($request);
 // }
 // }

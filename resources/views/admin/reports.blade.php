@@ -1,5 +1,5 @@
 
-@extends('layouts.admin')
+@extends('layouts.validate')
 
 @section('title', 'Signalements')
 @section('page-title', 'Gestion des Signalements')

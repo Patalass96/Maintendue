@@ -13,28 +13,42 @@ use App\Models\Notification;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\DonationImage;
+use App\Models\Category;
 
 
 class AssociationController extends Controller
 {
 
 
+/**
+     * Afficher la liste publique des associations
+     */
+    public function publicIndex()
+    {
+        $associations = Association::where('verification_status', 'verified')
+            ->with('manager')
+            ->latest()
+            ->paginate(12);
+
+        return view('associations.index', compact('associations'));
+    }
 
     /**
      * Afficher le dashboard de l'association
      */
+
     public function index()
     {
         $association = Auth::user()->association;
 
         if (!$association) {
-            return redirect()->route('association.complete-profile')
+            return redirect()->route('associations.complete-profile')
                 ->with('warning', 'Veuillez compléter votre profil association.');
         }
 
         // Vérifier le statut de vérification
         if ($association->verification_status !== 'verified') {
-            return redirect()->route('associations.complete-profile')
+            return redirect()->route('associations.pending')
                 ->with('warning', 'Votre association est en attente de validation.');
         }
 
@@ -48,6 +62,47 @@ class AssociationController extends Controller
         ];
 
         return view('associations.dashboard', compact('association', 'stats'));
+    }
+      /**
+     * Afficher la liste publique des associations
+     */
+    public function indexPublic()
+    {
+        $associations = Association::where('verification_status', 'verified')
+            ->with('manager')
+            ->paginate(15);
+
+        return view('associations.index', compact('associations'));
+    }
+
+    /**
+     * Afficher le profil public d'une association
+     */
+    public function show(Association $association)
+    {
+        // Vérifier que l'association est vérifiée et active
+        if ($association->verification_status !== 'verified' || !$association->manager->is_active) {
+            abort(404, 'Association non trouvée');
+        }
+
+        // Charger les relations
+        $association->load([
+            'manager',
+            'collectionPoints',
+            'requests' => function ($query) {
+                $query->where('status', 'active')->limit(6);
+            }
+        ]);
+
+        // Statistiques
+        $stats = [
+            'total_donations' => $association->stats_total_donations ?? 0,
+            'satisfaction_rate' => $association->stats_satisfaction_rate ?? 0,
+            'active_requests' => $association->requests()->where('status', 'active')->count(),
+            'collection_points' => $association->collectionPoints()->count(),
+        ];
+
+        return view('associations.show', compact('association', 'stats'));
     }
 
     /**
@@ -66,6 +121,39 @@ class AssociationController extends Controller
         return view('associations.complete-profile', [
             'user' => $user,
             'association' => $association
+        ]);
+    }
+
+    /**
+     * Afficher l'état de validation en attente
+     */
+    public function pending()
+    {
+        $user = Auth::user();
+        $association = $user->association;
+
+        // Si pas d'association, rediriger vers la création
+        if (!$association) {
+            return redirect()->route('associations.complete-profile')
+                ->with('warning', 'Veuillez d\'abord créer votre profil association.');
+        }
+
+        // Si vérifiée, rediriger vers le dashboard
+        if ($association->verification_status === 'verified') {
+            return redirect()->route('associations.dashboard');
+        }
+
+        $status = match($association->verification_status) {
+            'pending' => 'Votre association est en attente de validation par nos administrateurs.',
+            'rejected' => 'Votre association a été rejetée. Veuillez contacter le support pour plus d\'informations.',
+            default => 'État de validation inconnu.',
+        };
+
+        return view('associations.pending', [
+            'user' => $user,
+            'association' => $association,
+            'status' => $status,
+            'verification_status' => $association->verification_status,
         ]);
     }
 
@@ -230,7 +318,7 @@ class AssociationController extends Controller
     public function completeProfile(Request $request)
 {
     $user = Auth::user();
-    
+
     // Validation simplifiée
     $validated = $request->validate([
         // Champs obligatoires
@@ -240,7 +328,7 @@ class AssociationController extends Controller
         'phone' => 'required|string|max:20',
         'legal_address' => 'required|string',
         'verification_document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
-        
+
         // Champs optionnels
         'registration_number' => 'nullable|string|unique:associations,registration_number',
         'website' => 'nullable|url',
@@ -250,7 +338,7 @@ class AssociationController extends Controller
         'accepts_direct_delivery' => 'boolean',
         'accepts_collection_points' => 'boolean',
         'logo' => 'nullable|image|max:2048',
-        
+
         // Champs pour AssociationNeed (optionnels)
         'item_type' => 'nullable|string|in:clothing,shoes,food,school,furniture,other',
         'school_level' => 'nullable|string|max:100',
@@ -262,48 +350,48 @@ class AssociationController extends Controller
 
     // ==== 1. CRÉER/METTRE À JOUR L'ASSOCIATION ====
     $association = $user->association ?? new Association();
-    
+
     $association->user_id = $user->id;
     $association->fill($request->only([
         'legal_name', 'description', 'registration_number',
         'legal_address', 'contact_person', 'phone', 'website',
         'needs_description', 'opening_hours', 'delivery_radius'
     ]));
-    
+
     $association->accepts_direct_delivery = $request->boolean('accepts_direct_delivery');
     $association->accepts_collection_points = $request->boolean('accepts_collection_points');
     $association->verification_status = 'pending';
-    
+
     // Upload du logo
     if ($request->hasFile('logo')) {
         $logoPath = $request->file('logo')->store('associations/logos', 'public');
         $association->logo = $logoPath;
     }
-    
+
     // Upload du document
     if ($request->hasFile('verification_document')) {
         $docPath = $request->file('verification_document')->store('associations/documents', 'public');
         $association->verification_document = $docPath;
     }
-    
+
     $association->save();
-    
+
     // ==== 2. CRÉER UN AssociationNeed SI BESOIN (PAS DE DonationRequest) ====
     // NE PAS créer de DonationRequest ici - elle nécessite un donation_id
     if ($request->filled('item_type') || $request->filled('needs_description') || $request->filled('request_title')) {
         try {
             // Vérifiez si le modèle AssociationNeed existe
             $needModel = 'App\Models\AssociationNeed';
-            
+
             if (class_exists($needModel)) {
                 $need = new $needModel();
                 $need->association_id = $association->id;
-                
+
                 // Titre
-                $need->title = $request->filled('request_title') 
-                    ? $request->input('request_title') 
+                $need->title = $request->filled('request_title')
+                    ? $request->input('request_title')
                     : 'Besoins de ' . $association->legal_name;
-                
+
                 // Description combinée
                 $description = '';
                 if ($request->filled('needs_description')) {
@@ -314,7 +402,7 @@ class AssociationController extends Controller
                     $description .= $request->input('request_message');
                 }
                 $need->description = $description ?: 'Description des besoins';
-                
+
                 $need->item_type = $request->input('item_type', 'other');
                 $need->school_level = $request->input('school_level');
                 $need->quantity = $request->input('quantity', 1);
@@ -328,7 +416,7 @@ class AssociationController extends Controller
             \Log::error('Erreur création AssociationNeed: ' . $e->getMessage());
         }
     }
-    
+
     return redirect()->route('associations.complete-profile')
         ->with('success', 'Profil soumis avec succès ! En attente de validation.');
 }
@@ -345,7 +433,7 @@ class AssociationController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('associations.donations.available', compact('donations', 'association'));
+        return view('/associations.donations.available', compact('donations', 'association'));
     }
 
     /**

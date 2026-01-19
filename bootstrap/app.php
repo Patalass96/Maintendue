@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     $middleware->alias([
         'role' => \App\Http\Middleware\CheckRole::class,
         'verify.association' => \App\Http\Middleware\VerifyAssociation::class, 
-
+        '2fa' => \App\Http\Middleware\VerifyTwoFactor::class,
          
     ]);
 })

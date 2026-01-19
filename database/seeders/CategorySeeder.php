@@ -60,7 +60,7 @@ class CategorySeeder extends Seeder
 
         foreach ($categories as $category) {
             Category::updateOrCreate(
-                ['slug' => Str::slug($category['name'])], // Évite les doublons si tu relances le seeder
+                ['slug' => Str::slug($category['name'])], 
                 [
                     'name'        => $category['name'],
                     'icon'        => $category['icon'],

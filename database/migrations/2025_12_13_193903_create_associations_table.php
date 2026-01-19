@@ -19,29 +19,29 @@ return new class extends Migration
             $table->foreignId('user_id')
                   ->constrained('users')
                   ->onDelete('cascade')
-                  ->comment('Manager utilisateur de l’association.'); 
+                  ->comment('Manager utilisateur de l\'association.');
 
             // Informations Légales et Contact
             $table->string('legal_name'); // Nom légal de l'association
-            $table->text('description'); 
+            $table->text('description');
             $table->string('registration_number')->nullable()->unique(); // Numéro d'enregistrement officiel (nullable, unique)
             $table->text('legal_address'); // Adresse complète
             $table->string('contact_person'); // Nom du contact principal
-            $table->string('phone'); 
-            $table->string('website')->nullable(); 
-            $table->string('logo')->nullable(); 
+            $table->string('phone');
+            $table->string('website')->nullable();
+            $table->string('logo')->nullable();
 
             // Vérification et Statut
             $table->enum('verification_status', ['pending', 'verified', 'rejected'])->default('pending');
             $table->string('verification_document')->nullable()->comment('Chemin vers le justificatif légal');
-            
+
             // Logistique et Besoins
             $table->text('needs_description')->nullable()->comment('Description textuelle des besoins actuels.');
             $table->text('opening_hours')->nullable()->comment('Horaires pour la collecte ou la livraison.');
-            $table->integer('delivery_radius')->nullable()->comment('Rayon d’acceptation des dons en km.');
+            $table->integer('delivery_radius')->nullable()->comment('Rayon d\'acceptation des dons en km.');
             $table->boolean('accepts_direct_delivery')->default(true);
             $table->boolean('accepts_collection_points')->default(false);
-            
+
             // Mise en Avant
             $table->boolean('is_featured')->default(false);
 

@@ -1,6 +1,6 @@
 @import 'home.css';
 
-
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
 
 /* ===== VARIABLES ===== */
 :root {
@@ -317,6 +317,166 @@ p { margin-bottom: 1rem; }
     color: var(--dark-gray);
     cursor: pointer;
 }
+
+/* Styles MVP spécifiques */
+.donation-card {
+    transition: transform 0.3s ease;
+    border: 1px solid #dee2e6;
+}
+
+.donation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.donation-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Badges d'urgence */
+.badge-urgent { background-color: #dc3545; }
+.badge-medium { background-color: #ffc107; color: #000; }
+.badge-low { background-color: #198754; }
+
+/* Galerie d'images */
+.image-thumbnail {
+    cursor: pointer;
+    transition: opacity 0.3s;
+    height: 80px;
+    object-fit: cover;
+}
+
+.image-thumbnail:hover {
+    opacity: 0.7;
+}
+
+/* Filtres */
+.filter-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* Bouton géolocalisation */
+.btn-geolocation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Preview d'images uploadées */
+.image-preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.image-preview-item {
+    position: relative;
+}
+
+.image-preview-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.btn-remove-image {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #dc3545;
+    color: white;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Styles pour la clochette Livewire */
+.notification-bell {
+    position: relative;
+    margin-right: 15px;
+}
+
+/* Ajuster l'affichage pour s'intégrer dans votre header */
+.user-menu-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+     margin-left: auto;
+}
+
+/* Style du bouton clochette */
+.notification-bell .dropdown-toggle {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    position: relative;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.notification-bell .dropdown-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Badge de notification */
+.notification-bell .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+}
+
+/* Menu dropdown des notifications */
+.notification-bell .dropdown-menu {
+    width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .notification-bell {
+        order: -1;
+        margin-right: 10px;
+    }
+    
+    .user-menu-area {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+}
+
+ .notification-bell .dropdown-menu {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 350px;
+    }
+
 
 /* ===== FOOTER ===== */
 .footer {
@@ -692,12 +852,33 @@ body, html {
     flex: 1; /* Prend tout l'espace disponible au milieu */
 }
 
-.footer {
-    background-color: #39414e; /* Couleur sombre de ta photo */
-    color: white;
-    padding: 40px 0;
-    margin-top: auto; /* Force le footer vers le bas */
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid #007bff;
 }
+
+.profile-stats .card {
+    transition: transform 0.3s;
+}
+
+.profile-stats .card:hover {
+    transform: translateY(-5px);
+}
+
+.list-group-item.active {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.form-label.required:after {
+    content: " *";
+    color: #dc3545;
+}
+
+
 
 
 /* ===== RESPONSIVE ===== */
@@ -717,6 +898,19 @@ body, html {
         padding: 20px;
         box-shadow: var(--shadow-lg);
         z-index: 1000;
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .profile-stats .card-body {
+        padding: 1rem;
+    }
+    
+    .profile-stats h3 {
+        font-size: 1.5rem;
     }
     
     .nav-menu.active {
@@ -747,4 +941,20 @@ body, html {
         justify-content: center;
     }
 }
+
+.footer {
+    background-color: #39414e; /* Couleur sombre de ta photo */
+    color: white;
+    padding: 40px 0;
+    margin-top: auto; /* Force le footer vers le bas */
+}
+
+.donation-card img {
+        height: 150px;
+    }
+    
+    .filter-card {
+        margin-bottom: 1rem;
+    }
+
 

@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="associations-container">
-    
+
     <!-- Statistiques des associations -->
     <div class="stats-grid mb-30">
         <div class="stat-card">
@@ -18,40 +18,40 @@
                 <i class="fas fa-handshake"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">120</h3>
+                <h3 class="stat-number"></h3>
                 <p class="stat-label">Associations Actives</p>
                 <span class="stat-trend positive">+5 ce trimestre</span>
             </div>
         </div>
-        
+
         <div class="stat-card">
             <div class="stat-icon bg-green">
                 <i class="fas fa-user-check"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">85</h3>
+                <h3 class="stat-number"></h3>
                 <p class="stat-label">Associations Vérifiées</p>
                 <span class="stat-trend positive">98% vérifiées</span>
             </div>
         </div>
-        
+
         <div class="stat-card">
             <div class="stat-icon bg-orange">
                 <i class="fas fa-clock"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">8</h3>
+                <h3 class="stat-number"></h3>
                 <p class="stat-label">En Attente</p>
                 <span class="stat-trend negative">À traiter</span>
             </div>
         </div>
-        
+
         <div class="stat-card">
             <div class="stat-icon bg-red">
                 <i class="fas fa-flag"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">3</h3>
+                <h3 class="stat-number"></h3>
                 <p class="stat-label">Signalées</p>
                 <span class="stat-trend negative">À examiner</span>
             </div>
@@ -65,7 +65,7 @@
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Rechercher une association..." class="search-input">
             </div>
-            
+
             <div class="filter-group">
                 <select class="filter-select">
                     <option value="">Tous les statuts</option>
@@ -73,14 +73,14 @@
                     <option value="pending">En attente</option>
                     <option value="suspended">Suspendues</option>
                 </select>
-                
+
                 <select class="filter-select">
                     <option value="">Toutes les catégories</option>
                     <option value="education">Éducation</option>
                     <option value="health">Santé</option>
                     <option value="environment">Environnement</option>
                 </select>
-                
+
                 <button class="btn btn-secondary">
                     <i class="fas fa-filter"></i>
                     Filtrer
@@ -137,17 +137,17 @@
                             <button class="btn-icon btn-view" title="Voir">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            
+
                             @if($i % 5 == 0)
                             <button class="btn-icon btn-success btn-validate" title="Valider">
                                 <i class="fas fa-check"></i>
                             </button>
                             @endif
-                            
+
                             <button class="btn-icon btn-warning" title="Modifier">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            
+
                             @if($i % 7 != 0)
                             <button class="btn-icon btn-danger" title="Suspendre">
                                 <i class="fas fa-pause"></i>
@@ -159,7 +159,7 @@
                 @endfor
             </tbody>
         </table>
-        
+
         <!-- Pagination -->
         <div class="table-footer">
             <div class="table-info">
@@ -187,7 +187,7 @@
             <h3><i class="fas fa-clock text-orange"></i> Associations en attente de validation</h3>
             <span class="badge bg-orange">8 nouvelles</span>
         </div>
-        
+
         <div class="pending-associations-grid">
             @for($i = 1; $i <= 4; $i++)
             <div class="pending-card">
@@ -200,12 +200,12 @@
                         <p>Inscrite le 15/12/2024</p>
                     </div>
                 </div>
-                
+
                 <div class="pending-content">
                     <p><i class="fas fa-tag"></i> Catégorie : {{ ['Éducation', 'Santé', 'Environnement', 'Social'][$i-1] }}</p>
                     <p><i class="fas fa-map-marker-alt"></i> Lomé, Togo</p>
                 </div>
-                
+
                 <div class="pending-actions">
                     <button class="btn btn-sm btn-success">
                         <i class="fas fa-check"></i> Valider
@@ -631,25 +631,25 @@
             flex-direction: column;
             align-items: stretch;
         }
-        
+
         .search-box {
             max-width: 100%;
         }
-        
+
         .filter-group {
             width: 100%;
         }
-        
+
         .filter-select {
             flex: 1;
         }
-        
+
         .table-footer {
             flex-direction: column;
             gap: 15px;
             text-align: center;
         }
-        
+
         .table-actions {
             flex-wrap: wrap;
         }
@@ -671,7 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
             order: [[1, 'desc']]
         });
     }
-    
+
     // Gestion des actions
     document.querySelectorAll('.btn-validate').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -686,21 +686,134 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
+    //Modification d'une association
+
+    document.querySelectorAll('.btn-warning').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const row = this.closest('tr');
+            const associationName = row.querySelector('.association-info strong').textContent;
+
+            console.log('✏️ Modification de:', associationName);
+
+            showNotification(`Ouverture de l'édition de "${associationName}"`, 'info');
+
+            // TODO: Rediriger vers page d'édition ou ouvrir modal d'édition
+            // window.location.href = `/admin/associations/${associationId}/edit`;
+
+            // Ou ouvrir un modal d'édition
+            // openEditModal(associationId);
+        });
+    });
+
+
+    //suppension d'une association
+
+    document.querySelectorAll('.btn-danger').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const row = this.closest('tr');
+            const associationName = row.querySelector('.association-info strong').textContent;
+            const statusBadge = row.querySelector('.status-badge');
+            const currentStatus = statusBadge.textContent.trim();
+
+            // Déterminer l'action selon le statut actuel
+            const isSuspended = currentStatus === 'Suspendue';
+            const action = isSuspended ? 'réactiver' : 'suspendre';
+            const actionVerb = isSuspended ? 'Réactivation' : 'Suspension';
+
+            if (confirm(`Confirmer la ${action} de "${associationName}" ?`)) {
+                console.log(`🚫 ${actionVerb} de:`, associationName);
+
+                if (isSuspended) {
+                    // Réactiver
+                    statusBadge.className = 'status-badge active';
+                    statusBadge.textContent = 'Active';
+
+                    row.style.backgroundColor = '#f0fdf4';
+                    this.innerHTML = '<i class="fas fa-pause"></i>';
+                    this.title = 'Suspendre';
+
+                    showNotification(`"${associationName}" réactivée`, 'success');
+                } else {
+                    // Suspendre
+                    statusBadge.className = 'status-badge suspended';
+                    statusBadge.textContent = 'Suspendue';
+
+                    row.style.backgroundColor = '#fef2f2';
+                    this.innerHTML = '<i class="fas fa-play"></i>';
+                    this.title = 'Réactiver';
+
+                    showNotification(`"${associationName}" suspendue`, 'warning');
+                }
+
+                // Réinitialiser la couleur après animation
+                setTimeout(() => {
+                    row.style.backgroundColor = '';
+                }, 2000);
+
+                // TODO: Appel AJAX pour sauvegarder
+                /*
+                fetch(`/admin/associations/${associationId}/toggle-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ action: action })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Statut mis à jour:', data);
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    showNotification('Erreur lors du changement de statut', 'error');
+                });
+                */
+            }
+        });
+    });
+
+    // Voir les détails d'une association
+
+  document.querySelectorAll('.btn-view').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const row = this.closest('tr');
+            const associationName = row.querySelector('.association-info strong').textContent;
+            const category = row.querySelector('.association-info small').textContent;
+
+            console.log('👁️ Affichage détails:', associationName);
+
+            // Vous pouvez soit :
+            // 1. Ouvrir un modal avec les détails
+            // 2. Rediriger vers une page de détails
+
+            // Exemple avec modal (à adapter selon vos besoins)
+            showNotification(`Affichage des détails de "${associationName}"`, 'info');
+
+            // TODO: Ouvrir un modal ou rediriger
+            // window.location.href = `/admin/associations/${associationId}`;
+        });
+    });
+
+
     // Recherche en temps réel
     const searchInput = document.querySelector('.search-input');
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const rows = document.querySelectorAll('#associationsTable tbody tr');
-            
+
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 row.style.display = text.includes(searchTerm) ? '' : 'none';
             });
         });
     }
-    
+
     // Fonction de notification
     function showNotification(message, type = 'info') {
         const flashContainer = document.querySelector('.flash-container');
@@ -711,15 +824,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <span>${message}</span>
             <button class="close-btn">&times;</button>
         `;
-        
+
         flashContainer.appendChild(alert);
-        
+
         // Auto-remove après 5s
         setTimeout(() => {
             alert.classList.add('fade-out');
             setTimeout(() => alert.remove(), 500);
         }, 5000);
-        
+
         // Bouton de fermeture
         alert.querySelector('.close-btn').addEventListener('click', () => {
             alert.remove();
@@ -731,5 +844,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     @stack('styles')

@@ -1,11 +1,11 @@
-@extends('layouts.admin')
+@extends('layouts.validate')
 
 @section('title', 'Validation des Associations')
 @section('page-title', 'Validation des Associations')
 
 @section('content')
 <div class="validation-container">
-    
+
     <!-- En-tête avec statistiques -->
     <div class="validation-header">
         <div class="header-stats">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="header-actions">
             <button class="btn btn-secondary" id="bulkValidate">
                 <i class="fas fa-check-double"></i>
@@ -58,7 +58,7 @@
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Rechercher une association..." id="searchAssociation">
             </div>
-            
+
             <select class="filter-select" id="filterCategory">
                 <option value="">Toutes catégories</option>
                 <option value="education">Éducation</option>
@@ -67,7 +67,7 @@
                 <option value="social">Social</option>
                 <option value="other">Autre</option>
             </select>
-            
+
             <select class="filter-select" id="filterRegion">
                 <option value="">Toutes régions</option>
                 <option value="lome">Lomé</option>
@@ -77,7 +77,7 @@
                 <option value="plateaux">Plateaux</option>
                 <option value="maritime">Maritime</option>
             </select>
-            
+
             <input type="date" class="filter-select" id="filterDate" placeholder="Date d'inscription">
         </div>
     </div>
@@ -88,13 +88,13 @@
         @php
             $categories = ['Éducation', 'Santé', 'Environnement', 'Social'];
             $category = $categories[array_rand($categories)];
-            
+
             $regions = ['Lomé', 'Kara', 'Sokodé', 'Atakpamé', 'Dapaong'];
             $region = $regions[array_rand($regions)];
-            
+
             $names = [
                 'Les Jeunes Espoirs',
-                'Solidarité pour Tous', 
+                'Solidarité pour Tous',
                 'Main dans la Main',
                 'Coeur de Lion',
                 'Espoir Nouveau',
@@ -103,7 +103,7 @@
                 'La Main Tendue'
             ];
             $name = $names[$i-1];
-            
+
             $daysAgo = rand(1, 7);
         @endphp
         <div class="association-card" data-id="{{ $i }}" data-category="{{ strtolower($category) }}" data-region="{{ strtolower($region) }}">
@@ -121,27 +121,27 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card-actions">
                     <label class="checkbox-container">
                         <input type="checkbox" class="association-checkbox" value="{{ $i }}">
                         <span class="checkmark"></span>
                     </label>
-                    
+
                     <button class="btn-icon btn-success btn-validate" data-id="{{ $i }}">
                         <i class="fas fa-check"></i>
                     </button>
-                    
+
                     <button class="btn-icon btn-danger btn-reject" data-id="{{ $i }}">
                         <i class="fas fa-times"></i>
                     </button>
-                    
+
                     <button class="btn-icon btn-primary btn-view" data-id="{{ $i }}">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
             </div>
-            
+
             <div class="card-body">
                 <div class="association-details">
                     <div class="detail-row">
@@ -158,7 +158,7 @@
                             <p>contact@{{ strtolower(str_replace(' ', '', $name)) }}.tg</p>
                         </div>
                     </div>
-                    
+
                     <div class="detail-row">
                         <div class="detail-item">
                             <strong>Date création</strong>
@@ -174,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="document-preview">
                     <h5><i class="fas fa-file-alt"></i> Documents fournis</h5>
                     <div class="documents-list">
@@ -201,25 +201,25 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="description-preview">
                     <h5><i class="fas fa-align-left"></i> Description</h5>
-                    <p>Cette association a pour but d'aider les personnes dans le besoin dans la région de {{ $region }}. 
+                    <p>Cette association a pour but d'aider les personnes dans le besoin dans la région de {{ $region }}.
                     Elle intervient principalement dans le domaine de {{ strtolower($category) }} et compte {{ rand(5, 50) }} membres actifs.</p>
                 </div>
             </div>
-            
+
             <div class="card-footer">
                 <div class="validation-notes">
                     <textarea placeholder="Ajouter une note pour la validation..." class="notes-input" data-id="{{ $i }}"></textarea>
                 </div>
-                
+
                 <div class="footer-actions">
                     <button class="btn btn-outline btn-request-info" data-id="{{ $i }}">
                         <i class="fas fa-question-circle"></i>
                         Demander plus d'infos
                     </button>
-                    
+
                     <div class="action-buttons">
                         <button class="btn btn-danger btn-reject-full" data-id="{{ $i }}">
                             <i class="fas fa-times"></i>
@@ -257,9 +257,9 @@
     <div class="recently-validated mt-40">
         <div class="section-header">
             <h3><i class="fas fa-history"></i> Récemment validées</h3>
-            <a href="#" class="btn-link">Voir tout</a>
+            <a href="/resources/views/admin/" class="btn-link">Voir tout</a>
         </div>
-        
+
         <div class="validated-grid">
             @for($j = 1; $j <= 4; $j++)
             <div class="validated-card">
@@ -268,7 +268,7 @@
                         <i class="fas fa-hands-helping"></i>
                     </div>
                     <div>
-                        <h5>Association validée #{{ $j }}</h5>
+                        <h5>{{ $j }}</h5>
                         <small>Validée il y a {{ $j }} jour(s)</small>
                     </div>
                 </div>
@@ -311,33 +311,41 @@
 <style>
     /* ===== VALIDATION ASSOCIATION STYLES ===== */
     .validation-container {
+        min-height: 130vh;
+             position: sticky; /* ✅ Ajouté */
+            top: center; /* ✅ Ajouté */
+
         padding: 20px;
     }
 
     /* En-tête */
     .validation-header {
-        background: white;
+        /* background: white; */
         border-radius: var(--border-radius);
         padding: 25px;
-        box-shadow: var(--shadow);
+        /* box-shadow: var(--shadow); */
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 20px;
+        gap: 10px;
         margin-bottom: 30px;
     }
 
     .header-stats {
         display: flex;
-        gap: 30px;
+        gap: 10px;
         flex-wrap: wrap;
     }
 
     .stat-item {
+        background: white;
+        padding: 10px !important;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 5px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
     }
 
     .stat-item i {
@@ -430,6 +438,7 @@
         border: 2px solid #e5e7eb;
         transition: all 0.3s;
         overflow: hidden;
+        padding: 1em;
     }
 
     .association-card:hover {
@@ -890,43 +899,43 @@
             flex-direction: column;
             align-items: stretch;
         }
-        
+
         .header-stats {
             justify-content: center;
         }
-        
+
         .filter-group {
             flex-direction: column;
             align-items: stretch;
         }
-        
+
         .filter-group .search-box {
             min-width: auto;
         }
-        
+
         .card-header {
             flex-direction: column;
             align-items: stretch;
         }
-        
+
         .association-info {
             flex-direction: column;
             text-align: center;
         }
-        
+
         .association-meta {
             justify-content: center;
         }
-        
+
         .card-actions {
             justify-content: center;
         }
-        
+
         .footer-actions {
             flex-direction: column;
             align-items: stretch;
         }
-        
+
         .action-buttons {
             justify-content: center;
         }
@@ -937,15 +946,15 @@
             flex: 1;
             min-width: 140px;
         }
-        
+
         .detail-row {
             grid-template-columns: 1fr;
         }
-        
+
         .validated-grid {
             grid-template-columns: 1fr;
         }
-        
+
         .pagination-container {
             flex-direction: column;
             gap: 15px;
@@ -958,219 +967,218 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Sélection multiple
-    const selectAll = document.querySelector('#selectAll');
-    const checkboxes = document.querySelectorAll('.association-checkbox');
-    
-    if (selectAll) {
-        selectAll.addEventListener('change', function() {
-            checkboxes.forEach(cb => {
-                cb.checked = this.checked;
-            });
-        });
-    }
-    
-    // Filtrage
-    const searchInput = document.getElementById('searchAssociation');
-    const categoryFilter = document.getElementById('filterCategory');
-    const regionFilter = document.getElementById('filterRegion');
-    const dateFilter = document.getElementById('filterDate');
-    
-    function filterAssociations() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const category = categoryFilter.value;
-        const region = regionFilter.value;
-        const date = dateFilter.value;
-        
-        document.querySelectorAll('.association-card').forEach(card => {
-            const name = card.querySelector('h4').textContent.toLowerCase();
-            const cardCategory = card.dataset.category;
-            const cardRegion = card.dataset.region;
-            const cardDate = ''; // À remplacer avec la vraie date
-            
-            let visible = true;
-            
-            if (searchTerm && !name.includes(searchTerm)) {
-                visible = false;
-            }
-            
-            if (category && cardCategory !== category) {
-                visible = false;
-            }
-            
-            if (region && cardRegion !== region) {
-                visible = false;
-            }
-            
-            if (date && cardDate !== date) {
-                visible = false;
-            }
-            
-            card.style.display = visible ? 'block' : 'none';
-        });
-    }
-    
-    searchInput.addEventListener('input', filterAssociations);
-    categoryFilter.addEventListener('change', filterAssociations);
-    regionFilter.addEventListener('change', filterAssociations);
-    dateFilter.addEventListener('change', filterAssociations);
-    
-    // Actions de validation
+    console.log('Admin JS initialisé');
+
+    // ===== TEST DE DÉBOGAGE =====
+    console.log('Nombre de boutons .btn-validate-full:', document.querySelectorAll('.btn-validate-full').length);
+
+    document.querySelectorAll('.btn-validate-full').forEach((btn, index) => {
+        const id = btn.getAttribute('data-id');
+        console.log(`Bouton ${index}: data-id =`, id);
+    });
+    // ===== VALIDATION D'ASSOCIATION =====
     document.querySelectorAll('.btn-validate, .btn-validate-full').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const associationId = this.dataset.id;
+        btn.addEventListener('click', function(e) {
+            e.preventDefault(); // Empêcher la soumission de formulaire
+
+            const associationId = this.getAttribute('data-id'); // Utiliser getAttribute
+            console.log('Validation de l\'association:', associationId);
+
+            if (!associationId) {
+                console.error('Aucun ID trouvé pour ce bouton');
+                alert('Erreur: ID d\'association manquant');
+                return;
+            }
+
             const card = document.querySelector(`.association-card[data-id="${associationId}"]`);
+
+            if (!card) {
+                console.error('Carte non trouvée pour l\'ID:', associationId);
+                return;
+            }
+
             const notes = card.querySelector('.notes-input')?.value || '';
-            
-            if (confirm(`Valider l'association #${associationId} ?`)) {
+
+            if (confirm(`Confirmer la validation de l'association #${associationId} ?`)) {
                 // Animation de succès
+                card.style.transition = 'all 0.5s ease';
                 card.style.borderColor = '#10b981';
                 card.style.boxShadow = '0 4px 20px rgba(16, 185, 129, 0.2)';
-                
-                // Supprimer la carte après délai
+
+                // Ici : Appel AJAX pour sauvegarder en BDD
+                // Exemple :
+                /*
+                fetch(`/admin/validate-association/${associationId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ notes: notes })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Association validée avec succès', 'success');
+                        // Supprimer la carte
+                        setTimeout(() => {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateX(-100px)';
+                            setTimeout(() => card.remove(), 300);
+                        }, 1000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    showNotification('Erreur lors de la validation', 'error');
+                });
+                */
+
+                // Pour l'instant : simulation
                 setTimeout(() => {
                     card.style.opacity = '0';
                     card.style.transform = 'translateX(-100px)';
                     setTimeout(() => card.remove(), 300);
                 }, 1000);
-                
+
                 showNotification('Association validée avec succès', 'success');
             }
         });
     });
-    
-    // Actions de rejet
+
+    // ===== REJET D'ASSOCIATION =====
     document.querySelectorAll('.btn-reject, .btn-reject-full').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const associationId = this.dataset.id;
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const associationId = this.getAttribute('data-id');
+            console.log('Rejet de l\'association:', associationId);
+
+            if (!associationId) {
+                console.error('Aucun ID trouvé pour ce bouton');
+                alert('Erreur: ID d\'association manquant');
+                return;
+            }
+
             const card = document.querySelector(`.association-card[data-id="${associationId}"]`);
-            const notes = card.querySelector('.notes-input')?.value || '';
-            
-            if (confirm(`Rejeter l'association #${associationId} ?`)) {
-                // Animation de rejet
+            const notes = card?.querySelector('.notes-input')?.value || '';
+
+            if (confirm(`Confirmer le rejet de l'association #${associationId} ?`)) {
+                card.style.transition = 'all 0.5s ease';
                 card.style.borderColor = '#dc2626';
                 card.style.boxShadow = '0 4px 20px rgba(220, 38, 38, 0.2)';
-                
-                // Supprimer la carte après délai
+
+                // Appel AJAX ici si besoin
+
                 setTimeout(() => {
                     card.style.opacity = '0';
                     card.style.transform = 'translateX(100px)';
                     setTimeout(() => card.remove(), 300);
                 }, 1000);
-                
+
                 showNotification('Association rejetée', 'warning');
             }
         });
     });
-    
-    // Voir les détails
-    document.querySelectorAll('.btn-view').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const associationId = this.dataset.id;
-            const card = document.querySelector(`.association-card[data-id="${associationId}"]`);
-            const name = card.querySelector('h4').textContent;
-            
-            showNotification(`Ouverture des détails de "${name}"`, 'info');
-            // Ici, tu pourrais ouvrir un modal ou rediriger
+
+    // ===== FILTRES =====
+    const searchInput = document.getElementById('searchAssociation');
+    const categoryFilter = document.getElementById('filterCategory');
+    const regionFilter = document.getElementById('filterRegion');
+    const dateFilter = document.getElementById('filterDate');
+
+    function filterAssociations() {
+        const searchTerm = searchInput?.value.toLowerCase() || '';
+        const category = categoryFilter?.value || '';
+        const region = regionFilter?.value || '';
+
+        document.querySelectorAll('.association-card').forEach(card => {
+            const name = card.querySelector('h4')?.textContent.toLowerCase() || '';
+            const cardCategory = card.getAttribute('data-category') || '';
+            const cardRegion = card.getAttribute('data-region') || '';
+
+            let visible = true;
+
+            if (searchTerm && !name.includes(searchTerm)) visible = false;
+            if (category && cardCategory !== category) visible = false;
+            if (region && cardRegion !== region) visible = false;
+
+            card.style.display = visible ? 'block' : 'none';
         });
-    });
-    
-    // Voir les documents
+    }
+
+    if (searchInput) searchInput.addEventListener('input', filterAssociations);
+    if (categoryFilter) categoryFilter.addEventListener('change', filterAssociations);
+    if (regionFilter) regionFilter.addEventListener('change', filterAssociations);
+    if (dateFilter) dateFilter.addEventListener('change', filterAssociations);
+
+    // ===== VOIR DOCUMENTS =====
     document.querySelectorAll('.btn-view-doc').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const docType = this.dataset.doc;
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const docType = this.getAttribute('data-doc');
             const modal = document.getElementById('documentModal');
             const title = document.getElementById('docTitle');
-            
-            title.textContent = `Document: ${docType}`;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Fermer le modal
-            modal.querySelector('.close-modal').addEventListener('click', function() {
+
+            if (modal && title) {
+                title.textContent = `Document: ${docType}`;
+                modal.style.display = 'block';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Fermer modal
+    const closeModal = document.querySelector('.close-modal');
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            const modal = document.getElementById('documentModal');
+            if (modal) {
+                modal.style.display = 'none';
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
-            });
-            
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
+            }
         });
-    });
-    
-    // Validation groupée
-    document.getElementById('bulkValidate')?.addEventListener('click', function() {
-        const selected = document.querySelectorAll('.association-checkbox:checked');
-        if (selected.length === 0) {
-            showNotification('Veuillez sélectionner au moins une association', 'warning');
+    }
+
+    // ===== FONCTION NOTIFICATION =====
+    window.showNotification = function(message, type = 'info') {
+        const flashContainer = document.querySelector('.flash-container');
+        if (!flashContainer) {
+            console.error('Flash container introuvable');
             return;
         }
-        
-        if (confirm(`Valider ${selected.length} association(s) sélectionnée(s) ?`)) {
-            selected.forEach(cb => {
-                const card = cb.closest('.association-card');
-                card.style.borderColor = '#10b981';
-                setTimeout(() => card.remove(), 500);
-            });
-            
-            showNotification(`${selected.length} association(s) validée(s)`, 'success');
-        }
-    });
-    
-    // Exporter
-    document.getElementById('exportPending')?.addEventListener('click', function() {
-        showNotification('Export des associations en attente en cours...', 'info');
-        // Simulation d'export
-        setTimeout(() => {
-            showNotification('Export terminé ! Fichier téléchargé.', 'success');
-        }, 1500);
-    });
-    
-    // Demander plus d'infos
-    document.querySelectorAll('.btn-request-info').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const associationId = this.dataset.id;
-            const card = this.closest('.association-card');
-            const name = card.querySelector('h4').textContent;
-            
-            showNotification(`Demande d'informations envoyée à "${name}"`, 'info');
-        });
-    });
-    
-    // Fonction de notification
-    function showNotification(message, type = 'info') {
-        const flashContainer = document.querySelector('.flash-container') || document.body;
+
         const alert = document.createElement('div');
         alert.className = `alert-flash ${type} fade-in`;
+
+        const iconMap = {
+            'success': 'check-circle',
+            'error': 'exclamation-circle',
+            'warning': 'exclamation-triangle',
+            'info': 'info-circle'
+        };
+
         alert.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check' : type === 'warning' ? 'exclamation-triangle' : 'info'}-circle"></i>
+            <i class="fas fa-${iconMap[type] || 'info-circle'}"></i>
             <span>${message}</span>
             <button class="close-btn">&times;</button>
         `;
-        
-        if (!flashContainer.classList.contains('flash-container')) {
-            flashContainer.style.position = 'fixed';
-            flashContainer.style.top = '20px';
-            flashContainer.style.right = '20px';
-            flashContainer.style.zIndex = '9999';
-        }
-        
+
         flashContainer.appendChild(alert);
-        
-        // Auto-remove après 5s
+
+        // Auto-remove
         setTimeout(() => {
             alert.classList.add('fade-out');
             setTimeout(() => alert.remove(), 500);
         }, 5000);
-        
-        // Bouton de fermeture
+
+        // Bouton fermeture
         alert.querySelector('.close-btn').addEventListener('click', () => {
             alert.remove();
         });
-    }
+    };
 });
 </script>
 @endpush

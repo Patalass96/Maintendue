@@ -40,12 +40,22 @@ class UserSeeder extends Seeder
             
         ]);
 
+
+          User::factory()->admin()->create([
+            'name' => 'Patience ALASSANI',
+            'email' => 'patiencealassani@gmail.com',
+            'password' => Hash::make('password123'),
+            'avatar'=> 'assets/images/MainTendue.png',
+            'role' => User::ROLE_ADMIN,
+        
+        ]);
+
         // --- GÉNÉRATION DE MASSE (Pour tester le design/pagination) ---
 
-        // Créer 10 managers d'associations aléatoires
-        User::factory(10)->association()->create();
+        // Créer 3 managers d'associations aléatoires
+        User::factory(3)->association()->create();
 
-        // Créer 30 donateurs aléatoires
-        User::factory(30)->create();
+        // Créer 5 donateurs aléatoires
+        User::factory(5)->create();
     }
 }
